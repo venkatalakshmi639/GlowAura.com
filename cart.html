@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Cart</title>
+  <style>
+    table { width: 60%; margin: 20px auto; border-collapse: collapse; }
+    th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
+    h1, h2 { text-align: center; }
+    .remove-btn {
+      padding: 5px 10px;
+      background-color: red;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    #buy-now-btn:disabled {
+      background-color: gray;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <h1>Your Shopping Cart</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody id="cart-items">
+      <!-- Items will appear here -->
+    </tbody>
+  </table>
+   <button id="buy-now-btn" style="padding: 10px 20px; margin-top: 10px; background-color: green; color: white; border: none; cursor: pointer;">
+    Buy Now
+  </button>
+
+  <div id="customer-form" style="display: none; margin-top: 20px; padding: 15px; border: 1px solid #ccc; background: #f9f9f9;">
+  <h3>Enter Your Details</h3>
+  <form id="order-form">
+    <input type="text" name="name" placeholder="Full Name" required><br><br>
+    <input type="text" name="address" placeholder="Address" required><br><br>
+    <input type="number" name="age" placeholder="Age" required><br><br>
+    <input type="tel" name="phone" placeholder="Phone Number" required pattern="[0-9]{10}" title="Enter a 10-digit phone number">
+
+    <select name="sex" required>
+      <option value="">Select Sex</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+      <option value="other">Other</option>
+    </select><br><br>
+    <input type="text" name="phone" placeholder="Phone Number" required><br><br>
+    <input type="text" name="pincode" placeholder="Pincode" required><br><br>
+
+    <label>Select Payment Mode:</label><br>
+    <input type="radio" name="payment" value="PhonePe" required> 
+    <img src="phonepay.jpeg" alt="PhonePe" width="50">
+    
+    <input type="radio" name="payment" value="GPay" required> 
+    <img src="gpay.jpeg" alt="GPay" width="50">
+
+    <input type="radio" name="payment" value="UPI" required> 
+    <img src="upi.jpeg" alt="UPI" width="50">
+
+    <input type="radio" name="payment" value="Cash" required> 
+    <label>Cash on Delivery</label><br><br>
+
+    <button type="submit" style="padding: 10px 20px; background-color: blue; color: white;">Place Order</button>
+  </form>
+</div>
+
+
+  <h2>Total: $<span id="total">0</span></h2>
+  <p id="cart-total">Total: ₹0.00</p>
+  <!-- Cart Total -->
+<p id="cart-total">Total: ₹0.00</p>
+
+<!-- Buy Now Button -->
+<button id="buy-now-btn" style="padding: 10px 20px; margin-top: 10px; background-color: green; color: white; border: none; cursor: pointer;">
+  Buy Now
+</button>
+<style>
+  .cart-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .cart-item img {
+    border-radius: 5px;
+  }
+</style>
+
+<script>
+  
+  function renderCart() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartItems = document.getElementById('cart-items');
+    cartItems.innerHTML = '';
+    let total = 0;
+
+    if (cart.length === 0) {
+      cartItems.innerHTML = '<tr><td colspan="3">Your cart is empty.</td></tr>';
+      document.getElementById('buy-now-btn').disabled = true;
+    } else {
+      document.getElementById('buy-now-btn').disabled = false;
+      cart.forEach((item, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>
+            <img src="${item.image}" alt="${item.name}" style="width:60px; height:60px; object-fit:cover; border-radius:8px; vertical-align:middle; margin-right:10px;">
+            ${item.name}
+          </td>
+          <td>₹${item.price.toFixed(2)}</td>
+          <td><button class="remove-btn" onclick="removeItem(${index})">Remove</button></td>
+        `;
+        cartItems.appendChild(row);
+        total += item.price;
+      });
+    }
+
+    document.getElementById('total').innerText = total.toFixed(2);
+    document.getElementById('cart-total').innerText = `Total: ₹${total.toFixed(2)}`;
+  }
+
+  function removeItem(index) {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
+  }
+
+  document.getElementById('buy-now-btn').addEventListener('click', function () {
+    document.getElementById('customer-form').style.display = 'block';
+    this.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  document.getElementById('order-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    document.getElementById('customer-form').innerHTML = "<h3>Processing Payment... Please wait.</h3>";
+    setTimeout(() => {
+      alert("🎉 Payment successful! Your order has been placed.");
+      localStorage.removeItem("cart");
+      window.location.href = "products.html";
+    }, 3000);
+  });
+
+  // Initial call
+  renderCart();
+</script>
+
+</body>
+</html>

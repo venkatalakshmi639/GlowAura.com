@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glow Aura Ecommerce Website Design </title> 
+<link rel="stylesheet" href="home.css">
+</head>
+<body>
+  <div class="container">
+    <div class="navbar">
+       <div class="logo">
+         <img src="glowaura.png" width="200px">  
+       </div>
+       <header>
+
+        <nav>
+            <a href="c.html" class="active">SKIN CARE</a>
+            <a href="h.html">HAIR CARE</a>
+            <a href="e.html">HEALTH CARE</a>
+            <a href="ex.html">EXCERCISES</a>
+            <a href="food.html">FOOD INTAKE</a>
+        </nav>
+
+    </header>
+       <img src="cart.png" width="100px" height="100px">
+       <img src="menu.png" class="menu-icon" onclick="menutoggle()">
+     </div>
+</div>
+      <div class="row"> 
+        <div class="col-2">
+          <h1>Healthy skin is a reflection of overall wellness</h1>
+          <p>it’s not just about what you apply, but also how you take care of your body, mind, and soul</p>
+          <a href=""class="btn">EXPLORE NOW &#10132;</a> 
+        </div>
+            <div class="col-2">
+              <img src="web.jpg" >
+            </div>
+            
+
+      </div>
+</div>
+
+</div>
+<!--------js for toggle menu---------->
+<script>
+var MenuItems = document.getElementById("MenuItems");
+MenuItems.style.maxHeight = "0px"; 
+function menutoggle(){
+if(MenuItems.style.maxHeight == "0px")
+{
+MenuItems.style.maxHeight = "200px";
+
+}
+else{
+MenuItems.style.maxHeight = "0px"
+}
+}
+</script>
+</body>
+
+</html>
+
